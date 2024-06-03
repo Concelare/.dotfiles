@@ -90,7 +90,7 @@ install_homebrew() {
 }
 
  install_linuxbrew() {
-  if ! sudo -u "$SUDO_USER" -i command -v brew &> /dev/null; then
+  if ! sudo -u "$SUDO_USER" -H bash -c 'command -v brew' &> /dev/null; then  
     echo "Installing Linuxbrew..."
     sudo -u "$SUDO_USER" /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
