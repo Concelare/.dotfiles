@@ -40,21 +40,21 @@ install_zsh() {
     echo "fast-syntax-highlighting is already installed"
   fi
 
-  if [[ ! -d "${ZSH_CUSTOM:-$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin" ]]; then
+  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin" ]]; then
     echo "Installing zsh-fsh theme..."
     git clone https://github.com/catppuccin/zsh-fsh.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin
   else
     echo "zsh-fsh theme is already installed"
   fi
 
-  if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-tab" ]]; then
+  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fzf-tab" ]]; then
     echo "Installing fzf-tab plugin..."
     git clone https://github.com/Aloxaf/fzf-tab.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fzf-tab
   else
     echo "fzf-tab plugin is already installed"
   fi
 
-  echo "Configuring .zshrc..."
+  echo "Configuring /home/$SUDO_USER/.zshrc  .zshrc"
   cat << EOF >> /home/$SUDO_USER/.zshrc
 # Set the zsh theme
 ZSH_THEME="catppuccin"
