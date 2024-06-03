@@ -8,7 +8,7 @@ fi
 
 # Install Zsh and Oh My Zsh
 install_zsh() {
-  export ZSH = /home/$SUDO_USER/.oh-my-zsh
+  export ZSH=/home/$SUDO_USER/.oh-my-zsh
   if ! command -v zsh &> /dev/null; then
     echo "Installing Zsh..."
     if [[ "$OSTYPE" == "darwin"* ]]; then
