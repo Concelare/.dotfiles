@@ -94,9 +94,9 @@ install_homebrew() {
     echo "Installing Linuxbrew..."
     sudo -u "$SUDO_USER" /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    # Add brew to .bashrc manually and reload .bashrc
-    sudo -u "$SUDO_USER" /bin/bash -c "(echo; echo 'eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"') >> \"$HOME/.bashrc\""
-    sudo -u "$SUDO_USER" /bin/bash -c "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
+    sudo -u "$SUDO_USER" /bin/bash -c "(echo; echo 'eval \"\$($(brew --prefix)/bin/brew shellenv)\"') >> /home/$SUDO_USER/.bashrc"
+    sudo -u "$SUDO_USER" /bin/bash -c "eval \"\$($(brew --prefix)/bin/brew shellenv)\""
+  else
   else
     echo "Linuxbrew is already installed"
   fi
