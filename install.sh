@@ -132,40 +132,41 @@ install_common_linux_macos() {
     echo "Updating package lists..."
     apt-get update
   fi
+  
+  # Install languages and tools as the non-root user
+  sudo -u "$SUDO_USER" /bin/bash <<EOF
+    echo "Sourcing the .bashrc to ensure brew is in the PATH..."
+    source /home/$SUDO_USER/.bashrc
 
- # Install languages
-  echo "Installing languages..."
-  sudo -u "$SUDO_USER" brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
+    echo "Installing languages..."
+    brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
 
-  # Install C# (requires additional steps)
-  echo "Installing C#..."
-  sudo -u "$SUDO_USER" /bin/bash -c brew tap isen-ng/dotnet-sdk-versions
-  sudo -u "$SUDO_USER" /bin/bash -c brew install --cask dotnet-sdk7
-  sudo -u "$SUDO_USER" /bin/bash -c brew install --cask dotnet-sdk8
+    echo "Installing C#..."
+    brew tap isen-ng/dotnet-sdk-versions
+    brew install --cask dotnet-sdk7
+    brew install --cask dotnet-sdk8
 
-  # Install C++ (GPP)
-  echo "Installing C++ (GPP)..."
-  if command -v apt-get &> /dev/null; then
-    apt-get install -y g++
-  else
-    sudo -u "$SUDO_USER" /bin/bash -c brew install gcc
-  fi
+    echo "Installing C++ (GPP)..."
+    if command -v apt-get &> /dev/null; then
+      sudo apt-get install -y g++
+    else
+      brew install gcc
+    fi
 
-  # Install Editor
-  echo "Installing Helix editor..."
-  sudo -u "$SUDO_USER" /bin/bash -c brew install helix
+    echo "Installing Helix editor..."
+    brew install helix
 
-  # Install LSPs
-  echo "Installing LSPs..."
-  sudo -u "$SUDO_USER" /bin/bash -c brew install clangd omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
+    echo "Installing LSPs..."
+    brew install clangd omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
 
-  # Install DAPs
-  echo "Installing DAPs..."
-  sudo -u "$SUDO_USER" /bin/bash -c brew install lldb netcoredbg delve
+    echo "Installing DAPs..."
+    brew install lldb netcoredbg delve
 
-  # Install Tools
-  echo "Installing Tools..."
-  sudo -u "$SUDO_USER" /bin/bash -c brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
+    echo "Installing Tools..."
+    brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
+EOF
+
+  echo "Finished Installing Languages and Tools"
 }
 
 install_common_windows() {
