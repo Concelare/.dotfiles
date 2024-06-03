@@ -316,11 +316,14 @@ install_common() {
 
 generate_helix_config() {
   HELIX_CONFIG_DIR_LINUX="$HOME/.config/helix"
-  HELIX_CONFIG_DIR_WINDOWS="$APPDATA\\helix"
+  HELIX_CONFIG_DIR_WINDOWS="$APPDATA/helix"
 
   echo "Creating Helix configuration directory..."
   if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
-    mkdir -p "$HELIX_CONFIG_DIR_LINUX"
+    mkdir -p "$HELIX_CONFIG_DIR_LINUX/themes"
+
+    echo "Downloading theme file..."
+    curl -fsSL -o "$HELIX_CONFIG_DIR_LINUX/themes/catppuccin_mocha.toml" https://raw.githubusercontent.com/catppuccin/helix/main/themes/default/catppuccin_mocha.toml
 
     echo "Generating helix config.toml..."
     cat <<EOF > "$HELIX_CONFIG_DIR_LINUX/config.toml"
@@ -345,7 +348,10 @@ display-messages = true
 display-inlay-hints = true
 EOF
   elif [[ "$OSTYPE" == "msys" ]]; then
-    mkdir -p "$HELIX_CONFIG_DIR_WINDOWS"
+    mkdir -p "$HELIX_CONFIG_DIR_WINDOWS/themes"
+
+    echo "Downloading theme file..."
+    curl -fsSL -o "$HELIX_CONFIG_DIR_WINDOWS/themes/catppuccin_mocha.toml" https://raw.githubusercontent.com/catppuccin/helix/main/themes/default/catppuccin_mocha.toml
 
     echo "Generating helix config.toml..."
     cat <<EOF > "$HELIX_CONFIG_DIR_WINDOWS/config.toml"
