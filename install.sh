@@ -96,6 +96,7 @@ install_homebrew() {
 
     sudo -u "$SUDO_USER" /bin/bash -c "(echo; echo 'eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"') >> /home/$SUDO_USER/.bashrc"
     sudo -u "$SUDO_USER" /bin/bash -c "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
+    sudo -u "$SUDO_USER" /bin/bash -c "source /home/$SUDO_USER/.bashrc"
   else
     echo "Linuxbrew is already installed"
   fi
