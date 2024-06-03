@@ -28,13 +28,11 @@ install_zsh() {
 
   if [[ ! -d "/home/$SUDO_USER/.oh-my-zsh" ]]; then
     echo "Installing Oh My Zsh..."
-    sudo -u "$SUDO_USER" /bin/bash <<EOF
-ZSH=/home/$SUDO_USER/.oh-my-zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-EOF
+    sudo -u "$SUDO_USER" sh -c "export ZSH=/home/$SUDO_USER/.oh-my-zsh && sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" --unattended"
   else
     echo "Oh My Zsh is already installed"
   fi
-
+  
   if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting" ]]; then
     echo "Installing fast-syntax-highlighting plugin..."
     git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
