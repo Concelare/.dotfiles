@@ -141,7 +141,7 @@ install_common_linux_macos() {
     source /home/$SUDO_USER/.bashrc
 
     echo "Installing languages..."
-    eval "\$($(brew --prefix)/bin/brew shellenv)"
+    eval "\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
 
     echo "Installing C#..."
