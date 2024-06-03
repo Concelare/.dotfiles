@@ -75,8 +75,8 @@ bindkey '^[[B' history-substring-search-down
 export FZF_DEFAULT_COMMAND='history -10000'
 export FZF_CTRL_R_OPTS='--preview "echo {}"'
 
-export DOTNET_ROOT="$HOME/.dotnet"
-export PATH="$DOTNET_ROOT:$PATH"
+export DOTNET_ROOT="/home/$SUDO_USER/.dotnet"
+export PATH="$PATH:/home/$SUDO_USER/.dotnet"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
