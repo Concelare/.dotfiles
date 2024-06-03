@@ -58,7 +58,7 @@ install_zsh() {
   rm /home/$SUDO_USER/.zshrc
   cat << EOF >> /home/$SUDO_USER/.zshrc
 # Set the zsh theme
-ZSH_THEME="catppuccin"
+ZSH_THEME="strug"
 
 # Enable plugins
 plugins=(git sudo fast-syntax-highlighting fzf-tab)
