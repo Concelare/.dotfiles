@@ -28,7 +28,9 @@ install_zsh() {
 
   if [[ ! -d "/home/$SUDO_USER/.oh-my-zsh" ]]; then
     echo "Installing Oh My Zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sudo -u "$SUDO_USER" /bin/bash <<EOF
+ZSH=/home/$SUDO_USER/.oh-my-zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+EOF
   else
     echo "Oh My Zsh is already installed"
   fi
