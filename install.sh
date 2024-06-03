@@ -296,7 +296,7 @@ EOF
 
     # Set Profile
     echo "Adding profile setting to \$PROFILE..."
-    powershell -Command "Add-Content -Path \$PROFILE -Value \"`n. `\"$PWD/profile.ps1`\"\""
+    powershell -Command "Add-Content -Path \$PROFILE -Value \"`n. `\"`$PWD/profile.ps1`\"\""
   else
     echo "This function is only runnable on Windows."
   fi
