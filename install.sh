@@ -165,12 +165,14 @@ install_common_linux_macos() {
     brew install helix
 
     echo "Installing LSPs..."
-    brew install clangd omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
+    brew install llvm omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
 
     echo "Installing DAPs..."
-    brew install lldb netcoredbg delve
+    brew install llnode netcoredbg delve
 
     echo "Installing Tools..."
+    brew tap kdash-rs/kdash
+  
     brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
 EOF
   echo "Finished Installing Languages and Tools"
