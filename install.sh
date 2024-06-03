@@ -33,19 +33,20 @@ install_zsh() {
     echo "Oh My Zsh is already installed"
   fi
   
-  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting" ]]; then
-    echo "Installing fast-syntax-highlighting plugin..."
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]]; then
+    echo "Installing zsh-syntax-highlighting plugin..."
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   else
-    echo "fast-syntax-highlighting is already installed"
+    echo "zsh-syntax-highlighting is already installed"
   fi
 
-  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin" ]]; then
-    echo "Installing zsh-fsh theme..."
-    git clone https://github.com/catppuccin/zsh-fsh.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin
+  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/catppuccin-zsh-syntax-highlighting" ]]; then
+    echo "Installing fzf-tab plugin..."
+    https://github.com/catppuccin/zsh-syntax-highlighting ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/catppuccin-zsh-syntax-highlighting
   else
-    echo "zsh-fsh theme is already installed"
+    echo "fzf-tab plugin is already installed"
   fi
+
 
   if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fzf-tab" ]]; then
     echo "Installing fzf-tab plugin..."
@@ -79,6 +80,7 @@ export PATH="$DOTNET_ROOT:$PATH"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
+source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting
 EOF
   echo "Completed .zshrc configuration..."
 }
