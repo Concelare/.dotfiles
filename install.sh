@@ -25,36 +25,36 @@ install_zsh() {
     echo "Zsh is already installed"
   fi
 
-  if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  if [[ ! -d "/home/$SUDO_USER/.oh-my-zsh" ]]; then
     echo "Installing Oh My Zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   else
     echo "Oh My Zsh is already installed"
   fi
 
-  if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting" ]]; then
+  if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting" ]]; then
     echo "Installing fast-syntax-highlighting plugin..."
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
   else
     echo "fast-syntax-highlighting is already installed"
   fi
 
-  if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/catppuccin" ]]; then
+  if [[ ! -d "${ZSH_CUSTOM:-$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin" ]]; then
     echo "Installing zsh-fsh theme..."
-    git clone https://github.com/catppuccin/zsh-fsh.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/catppuccin
+    git clone https://github.com/catppuccin/zsh-fsh.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/themes/catppuccin
   else
     echo "zsh-fsh theme is already installed"
   fi
 
   if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-tab" ]]; then
     echo "Installing fzf-tab plugin..."
-    git clone https://github.com/Aloxaf/fzf-tab.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-tab
+    git clone https://github.com/Aloxaf/fzf-tab.git ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/fzf-tab
   else
     echo "fzf-tab plugin is already installed"
   fi
 
   echo "Configuring .zshrc..."
-  cat <<EOF >> $HOME/.zshrc
+  cat << EOF >> /home/$SUDO_USER/.zshrc
 # Set the zsh theme
 ZSH_THEME="catppuccin"
 
@@ -456,4 +456,5 @@ esac
 # Install Jetbrains mono font
 install_nerdfont_jetbrains_mono
 
+chsh -s $(which zsh)
 echo "Installation completed!"
