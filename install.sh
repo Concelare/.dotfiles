@@ -171,6 +171,7 @@ EOF
   echo "Finished Installing Languages and Tools"
 }
 
+
 install_common_windows() {
   if [[ "$OS" == "Windows_NT" ]]; then
     install_chocolatey
@@ -297,6 +298,7 @@ EOF
     # Set Profile
     echo "Adding profile setting to \$PROFILE..."
     powershell -Command "Add-Content -Path \$PROFILE -Value \"`n. `\"`$PWD/profile.ps1`\"\""
+
   else
     echo "This function is only runnable on Windows."
   fi
