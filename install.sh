@@ -41,10 +41,10 @@ install_zsh() {
   fi
 
   if [[ ! -d "${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/catppuccin-zsh-syntax-highlighting" ]]; then
-    echo "Installing fzf-tab plugin..."
-    https://github.com/catppuccin/zsh-syntax-highlighting ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/catppuccin-zsh-syntax-highlighting
+    echo "Installing Catppuccin Zsh Syntax Highlighting plugin..."
+    git clone https://github.com/catppuccin/zsh-syntax-highlighting ${ZSH_CUSTOM:-/home/$SUDO_USER/.oh-my-zsh/custom}/plugins/catppuccin-zsh-syntax-highlighting
   else
-    echo "fzf-tab plugin is already installed"
+    echo "Catppuccin Zsh Syntax Highlighting plugin is already installed"
   fi
 
 
@@ -80,7 +80,7 @@ export PATH="$DOTNET_ROOT:$PATH"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
-source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting
+source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting/catppuccin_mocha-zsh-syntax-highlighting.zsh
 EOF
   echo "Completed .zshrc configuration..."
 }
