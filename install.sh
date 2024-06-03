@@ -76,7 +76,7 @@ export FZF_DEFAULT_COMMAND='history -10000'
 export FZF_CTRL_R_OPTS='--preview "echo {}"'
 
 export DOTNET_ROOT="/home/$SUDO_USER/.dotnet"
-export PATH="$PATH:/home/$SUDO_USER/.dotnet"
+export PATH="$PATH:/home/$SUDO_USER/.dotnet:/home/$SUDO_USER/go/bin"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
@@ -187,7 +187,8 @@ install_common_linux_macos() {
     brew install bubblewrap
     opam init
     opam install ocaml-lsp-server
-    brew install llvm omnisharp-mono docker vscode-langservers-extracted typescript-language-server lua-language-server python-lsp-server rust-analyzer taplo yaml-language-server zls
+    brew install llvm omnisharp-mono docker vscode-langservers-extracted typescript-language-server lua-language-server python-lsp-server rust-analyzer taplo yaml-language-server zls gopls
+    go install github.com/nametake/golangci-lint-langserver@latest
 
     echo "Installing DAPs..."
     brew install llnode delve
