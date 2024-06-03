@@ -144,16 +144,16 @@ install_common_linux_macos() {
 
     echo "Installing languages..."
     eval "\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
+    brew install zig rust go php ocaml python node oven-sh/bun/bun elixir openjdk@11 lua
 
     echo "Installing C#..."
     brew tap isen-ng/dotnet-sdk-versions
     if [[ "$OSTYPE" == "darwin"* ]]; then
-      brew install --cask dotnet-sdk7
-      brew install --cask dotnet-sdk8
+      brew install --cask dotnet-sdk7-0-400
+      brew install --cask dotnet-sdk8-0-300
     else
-      brew install dotnet-sdk7
-      brew install dotnet-sdk8
+      brew install dotnet-sdk8-0-300
+      brew install dotnet-sdk7-0-400
     fi
 
     echo "Installing C++ (GPP)..."
