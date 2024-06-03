@@ -182,7 +182,12 @@ install_common_linux_macos() {
 
     echo "Installing LSPs..."
     brew tap omnisharp/omnisharp-roslyn
-    brew install llvm omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
+    brew install make
+    brew install opam
+    brew install bubblewrap
+    opam init
+    opam install ocaml-lsp-server
+    brew install llvm omnisharp-mono docker vscode-langservers-extracted typescript-language-server lua-language-server python-lsp-server rust-analyzer taplo yaml-language-server zls
 
     echo "Installing DAPs..."
     brew install llnode delve
