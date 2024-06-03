@@ -90,12 +90,11 @@ install_homebrew() {
 }
 
  install_linuxbrew() {
-  if ! command -v brew &> /dev/null; then
+  if ! sudo -u "$SUDO_USER" -i command -v brew &> /dev/null; then
     echo "Installing Linuxbrew..."
     sudo -u "$SUDO_USER" /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     sudo -u "$SUDO_USER" /bin/bash -c "(echo; echo 'eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"') >> /home/$SUDO_USER/.bashrc"
-    sudo -u "$SUDO_USER" /bin/bash -c "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
     
     # Add Linuxbrew bin to the PATH
     sudo -u "$SUDO_USER" /bin/bash -c "(echo; echo 'export PATH=\"/home/linuxbrew/.linuxbrew/bin:\$PATH\"') >> /home/$SUDO_USER/.bashrc"
