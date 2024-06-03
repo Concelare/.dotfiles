@@ -72,6 +72,7 @@ bindkey '^[[B' history-substring-search-down
 export FZF_DEFAULT_COMMAND='history -10000'
 export FZF_CTRL_R_OPTS='--preview "echo {}"'
 EOF
+  echo "Completed .zshrc configuration..."
 }
 
 install_zsh
@@ -97,17 +98,20 @@ install_linuxbrew() {
   fi
 }
 
+
 install_chocolatey() {
-  if ! command -v choco &> /dev/null; then
-    echo "Installing Chocolatey..."
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+  if [[ "$OSTYPE" == "msys" ]]; then
+    if ! command -v choco &> /dev/null; then
+      echo "Installing Chocolatey..."
+      powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+    else
+      echo "Chocolatey is already installed"
+    fi
   else
-    echo "Chocolatey is already installed"
+    echo "Skipping Chocolatey installation, not supported on this OS"
   fi
 }
-
+  
 install_common_linux_macos() {
   if [[ "$OS" == "Darwin" ]]; then
     install_homebrew
