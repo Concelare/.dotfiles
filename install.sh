@@ -92,12 +92,11 @@ install_homebrew() {
 install_linuxbrew() {
   if ! command -v brew &> /dev/null; then
     echo "Installing Linuxbrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    sudo -u "$SUDO_USER" /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   else
     echo "Linuxbrew is already installed"
   fi
 }
-
 
 install_chocolatey() {
   if [[ "$OSTYPE" == "msys" ]]; then
