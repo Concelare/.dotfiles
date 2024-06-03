@@ -132,13 +132,15 @@ install_common_linux_macos() {
     echo "Updating package lists..."
     apt-get update
   fi
-  
+
+
   # Install languages and tools as the non-root user
   sudo -u "$SUDO_USER" /bin/bash <<EOF
     echo "Sourcing the .bashrc to ensure brew is in the PATH..."
     source /home/$SUDO_USER/.bashrc
 
     echo "Installing languages..."
+    eval "\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
 
     echo "Installing C#..."
@@ -164,7 +166,7 @@ install_common_linux_macos() {
 
     echo "Installing Tools..."
     brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
-EOF
+EOF 
 
   echo "Finished Installing Languages and Tools"
 }
