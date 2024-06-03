@@ -71,6 +71,8 @@ bindkey '^[[B' history-substring-search-down
 # Use fzf for history search
 export FZF_DEFAULT_COMMAND='history -10000'
 export FZF_CTRL_R_OPTS='--preview "echo {}"'
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 EOF
   echo "Completed .zshrc configuration..."
 }
@@ -120,7 +122,7 @@ install_chocolatey() {
     echo "Skipping Chocolatey installation, not supported on this OS"
   fi
 }
-  
+
 install_common_linux_macos() {
   if [[ "$OS" == "Darwin" ]]; then
     install_homebrew
@@ -134,26 +136,29 @@ install_common_linux_macos() {
     apt-get update
   fi
 
+  # Disable Homebrew auto-update for this script
   export HOMEBREW_NO_AUTO_UPDATE=1
 
   # Install languages and tools as the non-root user
   sudo -u "$SUDO_USER" /bin/bash <<EOF
-    export HOMEBREW_NO_AUTO_UPDATE=1
     echo "Sourcing the .bashrc to ensure brew is in the PATH..."
     source /home/$SUDO_USER/.bashrc
 
     echo "Installing languages..."
     eval "\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    brew install zig rust go php ocaml python node oven-sh/bun/bun elixir openjdk@11 lua
+    brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
 
     echo "Installing C#..."
-    brew tap isen-ng/dotnet-sdk-versions
     if [[ "$OSTYPE" == "darwin"* ]]; then
-      brew install --cask dotnet-sdk7-0-400
-      brew install --cask dotnet-sdk8-0-300
+      wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+      chmod +x dotnet-install.sh
+      ./dotnet-install.sh --version 7.0.400
+      ./dotnet-install.sh --version 8.0.300
     else
-      brew install dotnet-sdk8-0-300
-      brew install dotnet-sdk7-0-400
+      wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+      chmod +x dotnet-install.sh
+      ./dotnet-install.sh --version 7.0.100
+      ./dotnet-install.sh --version 8.0.100
     fi
 
     echo "Installing C++ (GPP)..."
@@ -170,17 +175,20 @@ install_common_linux_macos() {
     brew install llvm omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
 
     echo "Installing DAPs..."
-    brew install llnode netcoredbg delve
+    brew install llnode delve
+
+    echo "Downloading and installing netcoredbg..."
+    wget https://github.com/Samsung/netcoredbg/releases/download/3.1.0-1031/netcoredbg-linux-amd64.tar.gz -O netcoredbg-linux-amd64.tar.gz
+    tar -xzvf netcoredbg-linux-amd64.tar.gz -C /usr/local/bin
+    rm netcoredbg-linux-amd64.tar.gz
+    echo 'export PATH="/usr/local/bin/netcoredbg:\$PATH"' >> /home/$SUDO_USER/.zshrc
 
     echo "Installing Tools..."
     brew tap kdash-rs/kdash
-  
-    brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
+    brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash
 EOF
   echo "Finished Installing Languages and Tools"
 }
-
-
 
 install_common_windows() {
   if [[ "$OS" == "Windows_NT" ]]; then
