@@ -90,8 +90,10 @@ install_homebrew() {
 }
 
  install_linuxbrew() {
-  if ! sudo -u "$SUDO_USER" /bin/bash -c 'command -v brew' &> /dev/null; then
-    echo "Installing Linuxbrew..."
+  
+echo "Checking if brew is installed at the default location..."
+  if [ ! -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    echo "Brew Install Not Found, Installing Linuxbrew..."
     sudo -u "$SUDO_USER" /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     sudo -u "$SUDO_USER" /bin/bash -c "(echo; echo 'eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"') >> /home/$SUDO_USER/.bashrc"
