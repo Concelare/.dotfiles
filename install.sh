@@ -77,6 +77,7 @@ export DOTNET_ROOT="$HOME/.dotnet"
 export PATH="$DOTNET_ROOT:$PATH"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+source <(fzf --zsh)
 EOF
   echo "Completed .zshrc configuration..."
 }
@@ -147,6 +148,7 @@ install_common_linux_macos() {
   sudo -u "$SUDO_USER" /bin/bash <<EOF
     echo "Sourcing the .bashrc to ensure brew is in the PATH..."
     source /home/$SUDO_USER/.bashrc
+    export HOMEBREW_NO_AUTO_UPDATE=1
 
     echo "Installing languages..."
     eval "\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -176,6 +178,7 @@ install_common_linux_macos() {
     brew install helix
 
     echo "Installing LSPs..."
+    brew tap omnisharp/omnisharp-roslyn
     brew install llvm omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
 
     echo "Installing DAPs..."
@@ -183,13 +186,13 @@ install_common_linux_macos() {
 
     echo "Downloading and installing netcoredbg..."
     wget https://github.com/Samsung/netcoredbg/releases/download/3.1.0-1031/netcoredbg-linux-amd64.tar.gz -O netcoredbg-linux-amd64.tar.gz
-    tar -xzvf netcoredbg-linux-amd64.tar.gz -C /usr/local/bin
+    sudo tar -xzvf netcoredbg-linux-amd64.tar.gz -C /usr/local/bin
     rm netcoredbg-linux-amd64.tar.gz
     echo 'export PATH="/usr/local/bin/netcoredbg:\$PATH"' >> /home/$SUDO_USER/.zshrc
 
     echo "Installing Tools..."
     brew tap kdash-rs/kdash
-    brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash
+    brew install docker gitui tldr scc fzf hyperfine lazydocker kdash
 EOF
   echo "Finished Installing Languages and Tools"
 }
