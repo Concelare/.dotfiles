@@ -72,6 +72,9 @@ bindkey '^[[B' history-substring-search-down
 export FZF_DEFAULT_COMMAND='history -10000'
 export FZF_CTRL_R_OPTS='--preview "echo {}"'
 
+export DOTNET_ROOT="$HOME/.dotnet"
+export PATH="$DOTNET_ROOT:$PATH"
+
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 EOF
   echo "Completed .zshrc configuration..."
