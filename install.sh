@@ -134,9 +134,9 @@ install_common_linux_macos() {
     apt-get update
   fi
 
+  export HOMEBREW_NO_AUTO_UPDATE=1
 
-
-# Install languages and tools as the non-root user
+  # Install languages and tools as the non-root user
   sudo -u "$SUDO_USER" /bin/bash <<EOF
     echo "Sourcing the .bashrc to ensure brew is in the PATH..."
     source /home/$SUDO_USER/.bashrc
