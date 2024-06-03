@@ -128,53 +128,39 @@ install_common_linux_macos() {
     apt-get update
   fi
 
-  # Install sudo if not installed
-  if ! command -v sudo &> /dev/null; then
-    echo "Installing sudo..."
-    if command -v apt-get &> /dev/null; then
-      apt-get install -y sudo
-    elif command -v yum &> /dev/null; then
-      yum install -y sudo
-    elif command -v pacman &> /dev/null; then
-      pacman -S --noconfirm sudo
-    fi
-  else
-    echo "sudo is already installed"
-  fi
-
-  # Install languages
+ # Install languages
   echo "Installing languages..."
-  brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
+  sudo -u "$SUDO_USER" brew install zig rust go php ocaml python node bun elixir openjdk@11 lua
 
   # Install C# (requires additional steps)
   echo "Installing C#..."
-  brew tap isen-ng/dotnet-sdk-versions
-  brew install --cask dotnet-sdk7
-  brew install --cask dotnet-sdk8
+  sudo -u "$SUDO_USER" brew tap isen-ng/dotnet-sdk-versions
+  sudo -u "$SUDO_USER" brew install --cask dotnet-sdk7
+  sudo -u "$SUDO_USER" brew install --cask dotnet-sdk8
 
   # Install C++ (GPP)
   echo "Installing C++ (GPP)..."
   if command -v apt-get &> /dev/null; then
     apt-get install -y g++
   else
-    brew install gcc
+    sudo -u "$SUDO_USER" brew install gcc
   fi
 
   # Install Editor
   echo "Installing Helix editor..."
-  brew install helix
+  sudo -u "$SUDO_USER" brew install helix
 
   # Install LSPs
   echo "Installing LSPs..."
-  brew install clangd omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
+  sudo -u "$SUDO_USER" brew install clangd omnisharp-mono docker vscode-css-languageserver vscode-html-languageserver jdtls typescript-language-server vscode-json-languageserver lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls
 
   # Install DAPs
   echo "Installing DAPs..."
-  brew install lldb netcoredbg delve
+  sudo -u "$SUDO_USER" brew install lldb netcoredbg delve
 
   # Install Tools
   echo "Installing Tools..."
-  brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
+  sudo -u "$SUDO_USER" brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
 }
 
 install_common_windows() {
