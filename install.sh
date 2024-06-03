@@ -55,6 +55,7 @@ install_zsh() {
   fi
 
   echo "Configuring /home/$SUDO_USER/.zshrc  .zshrc"
+  rm /home/$SUDO_USER/.zshrc
   cat << EOF >> /home/$SUDO_USER/.zshrc
 # Set the zsh theme
 ZSH_THEME="catppuccin"
