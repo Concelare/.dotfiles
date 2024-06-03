@@ -166,10 +166,11 @@ install_common_linux_macos() {
 
     echo "Installing Tools..."
     brew install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-zsh
-EOF 
+EOF
 
   echo "Finished Installing Languages and Tools"
 }
+
 
 
 install_common_windows() {
@@ -298,12 +299,10 @@ EOF
     # Set Profile
     echo "Adding profile setting to \$PROFILE..."
     powershell -Command "Add-Content -Path \$PROFILE -Value \"`n. `\"\`$PWD/profile.ps1\`\"\""
-
   else
     echo "This function is only runnable on Windows."
   fi
 }
-
 install_common() {
   if [[ "$OS" == "MSYS_NT"* ]]; then
     install_common_windows
