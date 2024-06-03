@@ -172,60 +172,61 @@ EOF
 }
 
 install_common_windows() {
-  install_chocolatey
+  if [[ "$OS" == "Windows_NT" ]]; then
+    install_chocolatey
 
-  # Update Chocolatey
-  echo "Updating Chocolatey..."
-  choco upgrade chocolatey -y
+    # Update Chocolatey
+    echo "Updating Chocolatey..."
+    choco upgrade chocolatey -y
 
-  # Install sudo if not installed
-  if ! command -v sudo &> /dev/null; then
-    echo "Installing sudo..."
-    choco install sudo -y
-  else
-    echo "sudo is already installed"
-  fi
+    # Install sudo if not installed
+    if ! command -v sudo &> /dev/null; then
+      echo "Installing sudo..."
+      choco install sudo -y
+    else
+      echo "sudo is already installed"
+    fi
 
-  # Install languages
-  echo "Installing languages..."
-  choco install zig rust go php ocaml python nodejs bun elixir jdk11 lua -y
+    # Install languages
+    echo "Installing languages..."
+    choco install zig rust go php ocaml python nodejs bun elixir jdk11 lua -y
 
-  # Install C#
-  echo "Installing C#..."
-  choco install dotnet-sdk --version=7.0 -y
-  choco install dotnet-sdk --version=8.0 -y
+    # Install C#
+    echo "Installing C#..."
+    choco install dotnet-sdk --version=7.0 -y
+    choco install dotnet-sdk --version=8.0 -y
 
-  # Install C++ (GPP)
-  echo "Installing C++ (GPP)..."
-  choco install mingw -y
+    # Install C++ (GPP)
+    echo "Installing C++ (GPP)..."
+    choco install mingw -y
 
-  # Install Editor
-  echo "Installing Helix editor..."
-  choco install helix-editor -y
+    # Install Editor
+    echo "Installing Helix editor..."
+    choco install helix-editor -y
 
-  # Install LSPs
-  echo "Installing LSPs..."
-  choco install clangd omnisharp vscode-css-languageserver-bin docker vscode-html-languageserver-bin jdtls typescript-language-server vscode-json-languageserver-bin lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls -y
+    # Install LSPs
+    echo "Installing LSPs..."
+    choco install clangd omnisharp vscode-css-languageserver-bin docker vscode-html-languageserver-bin jdtls typescript-language-server vscode-json-languageserver-bin lua-language-server ocaml-lsp pylsp rust-analyzer taplo yaml-language-server zls -y
 
-  # Install DAPs
-  echo "Installing DAPs..."
-  choco install lldb netcoredbg delve -y
+    # Install DAPs
+    echo "Installing DAPs..."
+    choco install lldb netcoredbg delve -y
 
-  # Install Tools
-  echo "Installing Tools..."
-  choco install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-posh -y
+    # Install Tools
+    echo "Installing Tools..."
+    choco install docker gitui tldr exa scc fzf hyperfine lazydocker kdash oh-my-posh -y
 
-  # Install PowerShell modules
-  echo "Installing PowerShell modules..."
-  Install-Module -Name 'Catppuccin' -Force
-  Install-Module -Name 'Terminal-Icons' -Force
-  Install-Module -Name 'PSReadLine' -Force
-  Install-Module -Name 'PSFzf' -Force
-  Install-Module -Name 'oh-my-posh' -Scope CurrentUser -Force
+    # Install PowerShell modules
+    echo "Installing PowerShell modules..."
+    powershell -Command "Install-Module -Name 'Catppuccin' -Force"
+    powershell -Command "Install-Module -Name 'Terminal-Icons' -Force"
+    powershell -Command "Install-Module -Name 'PSReadLine' -Force"
+    powershell -Command "Install-Module -Name 'PSFzf' -Force"
+    powershell -Command "Install-Module -Name 'oh-my-posh' -Scope CurrentUser -Force"
 
-  # Generate profile.ps1
-  echo "Generating profile.ps1..."
-  cat <<EOF > profile.ps1
+    # Generate profile.ps1
+    echo "Generating profile.ps1..."
+    cat << EOF > profile.ps1
 Import-Module Catppuccin
 
 \$Flavor = \$Catppuccin['Mocha']
@@ -293,9 +294,12 @@ Set-PsFzfOption -PSReadLineChordProvider 'Ctrl+f' -PSReadLineChordReverseHistory
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView
 EOF
 
-  # Set Profile
-  echo "Adding profile setting to \$PROFILE..."
-  Add-Content -Path \$PROFILE -Value "\`n. \"$PWD/profile.ps1\""
+    # Set Profile
+    echo "Adding profile setting to \$PROFILE..."
+    powershell -Command "Add-Content -Path \$PROFILE -Value \"`n. `\"$PWD/profile.ps1`\"\""
+  else
+    echo "This function is only runnable on Windows."
+  fi
 }
 
 install_common() {
@@ -309,7 +313,7 @@ install_common() {
 }
 
 generate_helix_config() {
-  HELIX_CONFIG_DIR_LINUX="$HOME/.config/helix"
+  HELIX_CONFIG_DIR_LINUX="/home/$SUDO_USER/.config/helix"
   HELIX_CONFIG_DIR_WINDOWS="$APPDATA/helix"
 
   echo "Creating Helix configuration directory..."
@@ -372,14 +376,38 @@ EOF
   fi
 }
 
+
 install_nerdfont_jetbrains_mono() {
   echo "Downloading Nerd Fonts (JetBrains Mono)..."
   curl -fsSL -o JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
 
+  echo "Installing necessary tools..."
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Install unzip and fontconfig if not installed
+    if ! command -v unzip &> /dev/null; then
+      echo "Installing unzip..."
+      sudo apt-get update && sudo apt-get install -y unzip
+    fi
+    if ! command -v fc-cache &> /dev/null; then
+      echo "Installing fontconfig..."
+      sudo apt-get update && sudo apt-get install -y fontconfig
+    fi
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS: install unzip and fontconfig with brew if not installed
+    if ! command -v unzip &> /dev/null; then
+      echo "Installing unzip..."
+      brew install unzip
+    fi
+    if ! command -v fc-cache &> /dev/null; then
+      echo "Installing fontconfig..."
+      brew install fontconfig
+    fi
+  fi
+
   echo "Extracting Nerd Fonts..."
   if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
-    unzip -o JetBrainsMono.zip -d /usr/share/fonts
-    fc-cache -f -v
+    sudo unzip -o JetBrainsMono.zip -d /usr/share/fonts
+    sudo fc-cache -f -v
   elif [[ "$OSTYPE" == "mingw"* || "$OSTYPE" == "msys"* ]]; then
     mkdir -p "C:\\Windows\\Fonts\\JetBrainsMono"
     tar -xzf JetBrainsMono.zip -C "C:\\Windows\\Fonts\\JetBrainsMono"
