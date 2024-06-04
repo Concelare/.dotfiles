@@ -210,6 +210,28 @@ install_common_linux_macos() {
     brew install docker gitui tldr scc fzf hyperfine lazydocker kdash
 EOF
   echo "Finished Installing Languages and Tools"
+
+  local theme_url="https://raw.githubusercontent.com/catppuccin/gitui/main/themes/catppuccin-mocha.ron"
+  local target_dir="/home/$SUDO_USER/.config/gitui"
+  local target_file="$target_dir/theme.ron"
+
+  # Ensure the target directory exists
+  sudo -u "$SUDO_USER" mkdir -p "$target_dir"
+
+  # Check if the theme file already exists
+  if [[ -f "$target_file" ]]; then
+    echo "catppuccin-mocha theme is already installed at $target_file"
+  else
+    # Download and copy the theme file
+    echo "Installing catppuccin-mocha theme for GitUI..."
+    sudo -u "$SUDO_USER" curl -fsSL "$theme_url" -o "$target_file"
+    
+    if [[ $? -eq 0 ]]; then
+      echo "catppuccin-mocha theme installed successfully at $target_file"
+    else
+      echo "Failed to install catppuccin-mocha theme"
+    fi
+  fi
 }
 
 install_common_windows() {
