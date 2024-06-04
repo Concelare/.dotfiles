@@ -195,6 +195,7 @@ install_common_linux_macos() {
     opam install ocaml-lsp-server
     brew install llvm omnisharp-mono docker vscode-langservers-extracted typescript-language-server lua-language-server python-lsp-server rust-analyzer taplo yaml-language-server zls gopls
     go install github.com/nametake/golangci-lint-langserver@latest
+    sudo ln -s /home/$SUDO_USER/go/bin/golangci-lint-langserver /home/$SUDO_USER/go/bin/golangci-lint
 
     echo "Installing DAPs..."
     brew install llnode delve
