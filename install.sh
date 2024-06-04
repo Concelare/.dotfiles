@@ -62,10 +62,10 @@ install_zsh() {
 ZSH_THEME="strug"
 
 # Enable plugins
-plugins=(git sudo fast-syntax-highlighting fzf-tab)
+plugins=(git sudo fzf-tab zsh-syntax-highlighting)
 
 # Load Oh My Zsh
-source \$HOME/.oh-my-zsh/oh-my-zsh.sh
+source /home/$SUDO_USER/.oh-my-zsh/oh-my-zsh.sh
 
 # Configure fzf history search
 bindkey '^[[A' history-substring-search-up
@@ -76,11 +76,17 @@ export FZF_DEFAULT_COMMAND='history -10000'
 export FZF_CTRL_R_OPTS='--preview "echo {}"'
 
 export DOTNET_ROOT="/home/$SUDO_USER/.dotnet"
-export PATH="$PATH:/home/$SUDO_USER/.dotnet:/home/$SUDO_USER/go/bin"
+export PATH="$PATH:/home/$SUDO_USER/.dotnet:/home/$SUDO_USER/go/bin:/home/linuxbrew/.linuxbrew/opt/llvm/bin"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
+export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
+export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
 source <(fzf --zsh)
-source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting/catppuccin_mocha-zsh-syntax-highlighting.zsh
+source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh]]']]'
 EOF
   echo "Completed .zshrc configuration..."
 }
