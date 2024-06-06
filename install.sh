@@ -86,7 +86,7 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PAT
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
 source <(fzf --zsh)
-source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh]]']]'
+source /home/$SUDO_USER/.oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
 EOF
   echo "Completed .zshrc configuration..."
 }
@@ -498,5 +498,5 @@ esac
 # Install Jetbrains mono font
 install_nerdfont_jetbrains_mono
 
-chsh -s $(which zsh)
+sudo -u "$SUDO_USER" /bin/bash chsh -s $(which zsh)
 echo "Installation completed!"
